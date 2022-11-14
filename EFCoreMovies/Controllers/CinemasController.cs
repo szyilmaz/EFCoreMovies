@@ -9,9 +9,7 @@ using NetTopologySuite.Geometries;
 
 namespace EFCoreMovies.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CinemasController : ControllerBase
+    public class CinemasController : BaseController
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
@@ -95,6 +93,48 @@ namespace EFCoreMovies.Controllers
             await _context.SaveChangesAsync();
 
             return Ok();
+        }
+
+        [HttpPut("cinemaOffer")]
+        public async Task<ActionResult> PutCinemaOffer(CinemaOffer cinemaOffer)
+        {
+            _context.Update(cinemaOffer);
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult> Get(int id)
+        {
+            var cinemaDB = await _context.Cinemas
+                .Include(c => c.CinemaHalls)
+                .Include(c => c.CinemaOffer)
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+            if (cinemaDB == null) return NotFound();
+
+            cinemaDB.Location = null;
+
+            return Ok(cinemaDB);
+        }
+
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult> Put(CinemaCreationDTO cinemaCreationDTO, int id)
+        {
+            var cinemaDB = await _context.Cinemas
+                .Include(c => c.CinemaHalls)
+                .Include(c => c.CinemaOffer)
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+            if (cinemaDB == null) return NotFound();
+
+            cinemaDB = _mapper.Map(cinemaCreationDTO, cinemaDB);
+
+            await _context.SaveChangesAsync();
+
+            return Ok();                    
         }
     }
 }

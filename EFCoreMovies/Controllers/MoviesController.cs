@@ -8,9 +8,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace EFCoreMovies.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class MoviesController : ControllerBase
+    public class MoviesController : BaseController
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;

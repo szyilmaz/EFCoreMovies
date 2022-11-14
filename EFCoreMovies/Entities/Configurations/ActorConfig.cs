@@ -9,8 +9,9 @@ namespace EFCoreMovies.Entities.Configurations
         public void Configure(EntityTypeBuilder<Actor> builder)
         {
             builder.Property(p => p.Name).IsRequired(true);
-            //builder.Property(p => p.DateOfBirth).HasColumnType("date");
             builder.Property(p => p.Biography).HasColumnType("nvarchar(max)");
+            //builder.Ignore(p => p.Age);
+
         }
     }
 }

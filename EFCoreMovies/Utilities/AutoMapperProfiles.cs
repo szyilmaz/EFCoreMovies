@@ -39,6 +39,8 @@ namespace EFCoreMovies.Utilities
 
             CreateMap<MovieActorCreationDTO, MovieActor>();
 
+            CreateMap<ActorCreationDTO, Actor>();
+
         }
     }
 }
