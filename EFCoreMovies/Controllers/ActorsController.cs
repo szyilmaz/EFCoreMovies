@@ -21,20 +21,12 @@ namespace EFCoreMovies.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<ActorDTO>> Get(int page = 1, int recordsToTake = 2)
+        public async Task<IEnumerable<ActorDTO>> Get()
         {
             return await _context.Actors
                 .OrderBy(g => g.Name)
                 .ProjectTo<ActorDTO>(_mapper.ConfigurationProvider)
-                .AsNoTracking()
-                .Paginate(page, recordsToTake)
                 .ToListAsync();
-        }
-
-        [HttpGet("ids")]
-        public async Task<IEnumerable<int>> GetIds()
-        {
-            return await _context.Actors.Select(a => a.Id).ToListAsync();
         }
     }
 }
