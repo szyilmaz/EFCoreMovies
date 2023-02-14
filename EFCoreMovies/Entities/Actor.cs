@@ -15,7 +15,7 @@ namespace EFCoreMovies.Entities
             set
             {
                 _name = String.Join(' ', 
-                    value.Split(' ')
+                     value.Split(' ')
                     .Select(n => n[0]
                     .ToString()
                     .ToUpper() + n.Substring(1).ToLower()).ToArray());
